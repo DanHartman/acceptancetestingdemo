@@ -1,0 +1,12 @@
+- name: ensure apt cache is updated
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+    upgrade: yes
+
+- name: ensure apt packages are installed
+  apt:
+    name: "{{item}}"
+    state: latest
+    force: yes
+  with_items: "{{apt_packages}}"
