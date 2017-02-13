@@ -23,4 +23,4 @@ installation:
 *  [production] `ansible-playbook -i deploy/ansible/inventory/production deploy/ansible/inventory/provision.yml`
 
 test:
-*  [browse to acceptance.loc](acceptance.loc) or `ip.of.external.box`
+*  [browse to acceptance.loc](http://acceptance.loc) or `ip.of.external.box`
