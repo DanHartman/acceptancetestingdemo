@@ -12,3 +12,6 @@ apt_packages:
   - vim
   - git
   - curl
+  - build-essential
+
+

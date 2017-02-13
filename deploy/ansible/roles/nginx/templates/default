@@ -1,0 +1,25 @@
+upstream tty {
+  server localhost:8000;
+}
+
+server {
+  listen 80;
+  server_name acceptance.loc;
+  location / {
+    proxy_pass http://tty;
+  }
+}
+
+server {
+  listen 80;
+  root /mnt/;
+  index index.php;
+  location / {
+    try_files $uri $uri/ /index.php?cmd=$uri&$args;
+  }
+  location ~ \.php {
+    include fastcgi_params;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_intercept_errors off;
+  }
+}

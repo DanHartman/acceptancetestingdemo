@@ -1,0 +1,12 @@
+# - name: install npm packages
+#   npm:
+#     name: tty.js
+#     state: latest
+#     global: yes
+
+- name: setup tty node app
+  template:
+    src: templates/shell.js
+    dest: "/home/{{ ansible_ssh_user }}/shell.js"
+    owner: root
+    mode: 0755
