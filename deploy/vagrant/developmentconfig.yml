@@ -1,5 +1,5 @@
 configs:
   server_ip: '10.11.0.42'
-  name.loc: 'fitnesse.loc'
+  name.loc: 'acceptance.loc'
 
 
