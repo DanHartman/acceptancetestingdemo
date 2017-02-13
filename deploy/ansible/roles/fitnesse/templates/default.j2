@@ -1,0 +1,11 @@
+upstream fitnesse {
+  server localhost:8080;
+}
+
+server {
+  listen 80;
+  server_name fitnesse.loc;
+  location / {
+    proxy_pass http://fitnesse;
+  }
+}

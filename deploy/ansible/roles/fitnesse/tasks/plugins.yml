@@ -1,0 +1,142 @@
+- name: ensure plugin directory exists
+  file:
+    path: "{{ fitnesse_path }}/plugins"
+    state: directory
+    owner: "{{ fitnesse_username }}"
+    group: "{{ fitnesse_group }}"
+  tags:
+    - fitnesse
+    - plugins
+
+# - name: ensure fitnesse jar is installed for maven builds
+  # shell: "mvn install:install-file -Dfile={{ fitnesse_path }}/fitnesse-standalone.jar -DgroupId=org.fitnesse -DartifactId=fitnesse -Dversion=20150927-SNAPSHOT -Dpackaging=jar"
+  # tags:
+    # - fitnesse
+    # - plugins
+
+- name: ensure plugin source exist
+  apt:
+    pkg: git
+    state: present
+  when: item.repo_url is defined
+  with_items: fitnesse_plugins
+  tags:
+    - fitnesse
+    - plugins
+
+- name: ensure plugin source exist
+  git:
+    repo: "{{ item.repo_url }}"
+    dest: "/tmp/fitnesse/{{ (item.repo_url.split('/')|last)[:-4] }}/"
+  when: item.repo_url is defined
+  with_items: fitnesse_plugins
+  tags:
+    - fitnesse
+    - plugins
+
+- name: determine maven plugins that need to be built
+  stat:
+    path: "/tmp/fitnesse/{{ (item.repo_url.split('/')|last)[:-4] }}/pom.xml"
+  register: fitnesse_maven_plugins
+  when: item.repo_url is defined
+  with_items: fitnesse_plugins
+  tags:
+    - fitnesse
+    - plugins
+
+- name: install maven to support plugins
+  apt:
+    pkg: maven
+    state: present
+  when: item.stat is defined and item.stat.path[-7:] == 'pom.xml'
+  with_items: fitnesse_maven_plugins.results
+
+- name: ensure maven plugin jars are built
+  shell: mvn package
+  args:
+    chdir: "{{ item.stat.path[:-7] }}"
+  when: item.stat is defined and item.stat.path[-7:] == 'pom.xml'
+  with_items: fitnesse_maven_plugins.results
+  tags:
+    - fitnesse
+    - plugins
+
+- name: determine maven plugins that need to be built
+  find:
+    path: "/tmp/fitnesse/{{ (item.repo_url.split('/')|last)[:-4] }}/target/"
+    patterns: "^{{ (item.repo_url.split('/')|last)[:-4] }}-[0-9]+.[0-9]+(.[0-9]+|)(-SNAPSHOT|).jar$"
+    use_regex: true
+  register: fitnesse_maven_jars
+  when: item.repo_url is defined
+  with_items: fitnesse_plugins
+  tags:
+    - fitnesse
+    - plugins
+
+- debug: var=fitnesse_maven_jars.results
+
+# - name: ensure ossrhUsername is declared
+  # lineinfile:
+    # dest: ~/.gradle/gradle.properties
+    # line: "ossrhUsername="
+    # create: yes
+  # tags:
+    # - fitnesse
+    # - plugins
+#
+# - name: ensure sonatypePassword is declared
+  # lineinfile:
+    # dest: ~/.gradle/gradle.properties
+    # line: "ossrhPassword="
+  # tags:
+    # - fitnesse
+    # - plugins
+#
+# - name: ensure gradles plugin jars are built
+  # shell: ./gradlew build
+  # args:
+    # chdir: "/tmp/fitnesse/{{ (item.repo.url.split('/')|last)[:-4] }}/"
+  # when: item.build is defined and item.build.type == 'gradles'
+  # with_items: fitnesse_plugins
+  # tags:
+    # - fitnesse
+    # - plugins
+
+- name: ensure maven build plugins are installed
+  copy:
+    dest: "{{ fitnesse_path }}/plugins/"
+    src: "{{ item.files[0].path }}"
+    owner: "{{ fitnesse_username }}"
+    group: "{{ fitnesse_group }}"
+    remote_src: true
+  when: item.files is defined
+  with_items: fitnesse_maven_jars.results
+  tags:
+    - fitnesse
+    - plugins
+
+- name: ensure downloadable plugins are installed
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ fitnesse_path }}/plugins/"
+    owner: "{{ fitnesse_username }}"
+    group: "{{ fitnesse_group }}"
+  when: item.url is defined
+  with_items: fitnesse_plugins
+  tags:
+    - fitnesse
+    - plugins
+
+- name: ensure plugins.properties configurations are added
+  lineinfile:
+    dest: "{{ fitnesse_path }}/plugins.properties"
+    line: "{{ item.1 }}"
+    owner: "{{ fitnesse_username }}"
+    group: "{{ fitnesse_group }}"
+    create: yes
+  with_subelements:
+    - "{{ fitnesse_plugins }}"
+    - configuration
+  tags:
+    - fitnesse
+    - plugins

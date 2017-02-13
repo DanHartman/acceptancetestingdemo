@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+
+description "FitNesse acceptance testing framework"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+setuid {{ fitnesse_username }}
+setgid {{ fitnesse_group }}
+
+chdir {{ fitnesse_path }}
+
+env JAVA_APP=fitnesse-standalone.jar
+env JAVA_OPTS="-Xms{{ fitnesse_xms|default('128M') }} -Xmx{{ fitnesse_xmx|default('512M') }} -server"
+env LOG_DIR=/var/log/fitnesse
+env LOG_FILE=java.log
+# Switch the commented lines below to get debug information
+env APP_OPTS="-p {{ fitnesse_port }}"
+# env APP_OPTS="-p {{ fitnesse_port }} -v -l $LOG_DIR"
+
+
+# Uncomment below to get debug information
+# console output
+
+script
+    exec /usr/bin/java $JAVA_OPTS -jar $JAVA_APP $APP_OPTS -l $LOG_DIR >> $LOG_DIR/$LOG_FILE 2>&1
+end script
+

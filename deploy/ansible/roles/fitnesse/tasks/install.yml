@@ -1,0 +1,59 @@
+# User and group management
+- name: FitNesse | Ensure group for this play app exists
+  group:
+    name: "{{ fitnesse_group }}"
+    state: present
+  sudo: yes
+
+- name: FitNesse | Ensure user for this play app exists
+  user:
+    name: "{{ fitnesse_username }}"
+    groups: "{{ fitnesse_group }}"
+    createhome: no
+    shell: /bin/bash
+    system: yes
+    state: present
+  sudo: yes
+
+# File system structure
+- name: FitNesse | Ensure install directory exists
+  file:
+    path: "{{ fitnesse_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ fitnesse_username }}"
+    group: "{{ fitnesse_group }}"
+  sudo: yes
+
+- name: FitNesse | Ensure install directory exists
+  file:
+    path: "/var/log/fitnesse"
+    state: directory
+    recurse: yes
+    owner: "{{ fitnesse_username }}"
+  sudo: yes
+
+# Application installation
+- name: FitNesse | Download application universal package
+  get_url:
+    url: "{{ fitnesse_url }}"
+    dest: "{{ fitnesse_path }}/fitnesse-standalone.jar"
+    force: yes
+    group: "{{ fitnesse_group }}"
+    owner: "{{ fitnesse_username }}"
+  notify:
+    - restart fitnesse
+
+# Service installation
+- name: FitNesse | Ensure the upstart configuration exists on the system
+  template:
+    src: upstart.j2
+    dest: /etc/init/fitnesse.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart fitnesse
+  tags:
+    - fitnesse
+    - configuration

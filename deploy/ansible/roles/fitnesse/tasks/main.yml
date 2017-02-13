@@ -1,0 +1,25 @@
+# install fitnesse server
+- include: install.yml
+- include: plugins.yml
+  when: fitnesse_plugins|length > 0
+
+- name: ensure apt cache is updated
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: install nginx
+  apt:
+    name: nginx
+    state: absent
+
+- name: install java
+  apt:
+    name: default-jre
+    state: latest
+
+- name: Copy nginx config
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/default
+  notify: restart nginx

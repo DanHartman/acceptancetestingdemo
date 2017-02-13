@@ -1,0 +1,9 @@
+fitnesse_path: /opt/fitnesse
+fitnesse_username: fitnesse
+fitnesse_group: fitnesse
+fitnesse_version: 20150814
+fitnesse_url: "http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release={{ fitnesse_version }}"
+fitnesse_port: 8080
+fitnesse_xms: 128M
+fitnesse_xmx: 512M
+fitnesse_plugins: [] # should be made up of repo with type and url
