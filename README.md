@@ -24,3 +24,4 @@ installation:
 
 test:
 *  [browse to acceptance.loc](http://acceptance.loc) or `ip.of.external.box`
+*  access development box `vagrant ssh` or `ssh user@ip.of.external.box`
