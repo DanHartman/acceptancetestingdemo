@@ -4,7 +4,7 @@
   become_method: sudo
   roles:
     - { role: packages, tags: ['packages'] }
-    - { role: node, tags: ['node'] }
+    - { role: nodejs, tags: ['nodejs'] }
     - { role: nginx, tags: ['nginx'] }
     # - { role: fitnesse, tags: ['fitnesse'] }
   handlers:

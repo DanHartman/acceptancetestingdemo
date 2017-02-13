@@ -12,8 +12,3 @@ apt_packages:
   - vim
   - git
   - curl
-  - python3
-  - python-urllib3
-  - python-openssl
-  - python-ndg-httpsclient
-  - python-pyasn1
