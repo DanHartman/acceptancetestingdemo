@@ -7,3 +7,13 @@ fitnesse_port: 8080
 fitnesse_xms: 128M
 fitnesse_xmx: 512M
 fitnesse_plugins: [] # should be made up of repo with type and url
+
+apt_packages:
+  - vim
+  - git
+  - curl
+  - python3
+  - python-urllib3
+  - python-openssl
+  - python-ndg-httpsclient
+  - python-pyasn1

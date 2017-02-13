@@ -1,8 +1,11 @@
-- name: Provision ubuntu server for Fitnesse Acceptance Testing
+- name: Provision ubuntu server for Acceptance Testing
   hosts: all
   become: yes
   become_method: sudo
   roles:
+    - { role: packages, tags: ['packages'] }
+    - { role: node, tags: ['node'] }
+    - { role: nginx, tags: ['nginx'] }
     # - { role: fitnesse, tags: ['fitnesse'] }
   handlers:
     - name: restart ssh
