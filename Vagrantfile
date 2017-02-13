@@ -18,8 +18,5 @@ Vagrant.configure(2) do |config|
     config.hostsupdater.aliases = [
     vagrant_config['name.loc']
   ]
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "#{current_dir}/deploy/vagrant/vagrant.yml"
-  end
 end
 
