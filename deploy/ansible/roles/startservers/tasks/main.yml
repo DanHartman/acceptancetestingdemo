@@ -1,7 +1,7 @@
 - name: create phantomjs service
   template:
-    src: templates/phantomjs_demo.service
-    dest: /etc/systemd/phantomjs_demo.service
+    src: templates/phantomjsdemo.service
+    dest: /etc/systemd/system/phantomjsdemo.service
     owner:  root
     mode: 0755
 
@@ -10,14 +10,14 @@
     daemon_reload: yes
     enabled: yes
     state: restarted
-    name: phantomjs_demo
+    name: phantomjsdemo.service
   notify: reload systemd
 
 
 - name: create web-terminal service
   template:
-    src: templates/webterminal_demo.service
-    dest: /etc/systemd/webterminal_demo.service
+    src: templates/webterminaldemo.service
+    dest: /etc/systemd/system/webterminaldemo.service
     owner: root
     mode: 0755
 
@@ -26,5 +26,6 @@
     daemon_reload: yes
     enabled: yes
     state: restarted
-    name: webterminal_demo
+    name: webterminaldemo.service
   notify: reload systemd
+  notify: reload nginx
