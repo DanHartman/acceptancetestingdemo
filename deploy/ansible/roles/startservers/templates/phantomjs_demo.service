@@ -1,0 +1,9 @@
+[Unit]
+Description=Starts phantomjs server
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/npm/bin/phantomjs --webdriver=4444
+
+[Install]
+WantedBy=multi-user.target

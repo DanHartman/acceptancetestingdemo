@@ -1,5 +1,30 @@
-- name: run phantomjs server
-  shell: /usr/local/lib/npm/bin/phantomjs --webdriver=4444 &
+- name: create phantomjs service
+  template:
+    src: templates/phantomjs_demo.service
+    dest: /etc/systemd/phantomjs_demo.service
+    owner:  root
+    mode: 0755
 
-- name: run web-terminal server
-  shell: /usr/local/lib/npm/bin/web-terminal --port 8080 &
+- name: enable phantomjs as systemd service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+    name: phantomjs_demo
+  notify: reload systemd
+
+
+- name: create web-terminal service
+  template:
+    src: templates/webterminal_demo.service
+    dest: /etc/systemd/webterminal_demo.service
+    owner: root
+    mode: 0755
+
+- name: enable web-terminal as systemd service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+    name: webterminal_demo
+  notify: reload systemd

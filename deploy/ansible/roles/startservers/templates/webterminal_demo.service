@@ -1,0 +1,9 @@
+[Unit]
+Description=Starts webterminal server
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/npm/bin/web-terminal --port 8080
+
+[Install]
+WantedBy=multi-user.target
