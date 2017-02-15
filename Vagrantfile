@@ -9,7 +9,8 @@ configs        = YAML.load_file("#{current_dir}/deploy/vagrant/developmentconfig
 vagrant_config = configs['configs']
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.synced_folder 'src', '/mnt'
   config.vm.network "private_network", ip: vagrant_config['server_ip']
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
