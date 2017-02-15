@@ -15,8 +15,6 @@ npm_config_unsafe_perm: "false"
 # Define a list of global packages to be installed with NPM.
 nodejs_npm_global_packages: #[]
 #  # Install a specific version of a package.
- - name: pm2
- - name: pm2-webshell
  - name: web-terminal
  - name: codeceptjs
  - name: webdriverio
