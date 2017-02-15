@@ -19,7 +19,6 @@ configs:
 
 installation:
 *  [development] `vagrant up`
-*  [development] `ansible-playbook -i deploy/ansible/inventory/development deploy/ansible/inventory/provision.yml`
 *  [production] `ansible-playbook -i deploy/ansible/inventory/production deploy/ansible/inventory/provision.yml`
 
 test:
