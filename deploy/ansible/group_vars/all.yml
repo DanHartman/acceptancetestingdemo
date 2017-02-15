@@ -13,5 +13,6 @@ apt_packages:
   - git
   - curl
   - build-essential
-
+  - fontconfig
+  - libfontconfig
 

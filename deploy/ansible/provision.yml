@@ -6,7 +6,8 @@
     - { role: packages, tags: ['packages'] }
     - { role: nodejs, tags: ['nodejs'] }
     - { role: nginx, tags: ['nginx'] }
-    - { role: tty, tags: ['tty'] }
+    - { role: startservers, tags: ['startservers'] }
+    # - { role: tty, tags: ['tty'] }
     # - { role: fitnesse, tags: ['fitnesse'] }
   handlers:
     - name: restart ssh

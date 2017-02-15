@@ -8,5 +8,5 @@
   template:
     src: templates/shell.js
     dest: "/home/{{ ansible_ssh_user }}/shell.js"
-    owner: root
+    owner: "{{ ansible_ssh_user }}"
     mode: 0755

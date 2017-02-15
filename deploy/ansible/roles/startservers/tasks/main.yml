@@ -1,0 +1,5 @@
+- name: run phantomjs server
+  shell: /usr/local/lib/npm/bin/phantomjs --webdriver=4444 &
+
+- name: run web-terminal server
+  shell: /usr/local/lib/npm/bin/web-terminal --port 8080 &
