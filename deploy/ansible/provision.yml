@@ -1,14 +1,12 @@
-- name: Provision ubuntu server for Acceptance Testing
+- name: Provision server for Acceptance Testing
   hosts: all
   become: yes
   become_method: sudo
   roles:
     - { role: packages, tags: ['packages'] }
     - { role: nodejs, tags: ['nodejs'] }
-    - { role: nginx, tags: ['nginx'] }
     - { role: startservers, tags: ['startservers'] }
-    # - { role: tty, tags: ['tty'] }
-    # - { role: fitnesse, tags: ['fitnesse'] }
+    - { role: nginx, tags: ['nginx'] }
   handlers:
     - name: restart ssh
       service:
