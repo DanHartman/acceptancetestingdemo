@@ -2,6 +2,8 @@
   hosts: all
   become: yes
   become_method: sudo
+  pre_tasks:
+    - raw: apt-get -y install python-simplejson aptitude
   roles:
     - { role: packages, tags: ['packages'] }
     - { role: nodejs, tags: ['nodejs'] }
