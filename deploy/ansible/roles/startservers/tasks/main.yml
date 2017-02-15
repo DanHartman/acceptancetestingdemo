@@ -28,3 +28,10 @@
     state: restarted
     name: webterminaldemo.service
   notify: reload systemd
+
+- name: put makefile in root directory
+  template:
+    src: templates/makefile
+    dest: /
+    owner: root
+    mode: 0755
