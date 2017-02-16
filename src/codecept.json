@@ -4,8 +4,8 @@
   "output": "./output",
   "helpers": {
     "WebDriverIO": {
-      "url": "https://www.pixotech.com/",
-      "browser": "chrome"
+      "url": "http://compliancecrane.com",
+      "browser": "phantomjs"
     }
   },
   "include": {
