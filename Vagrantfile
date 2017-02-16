@@ -15,7 +15,9 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
   end
-
+  config.hostsupdater.aliases = [
+    vagrant_config['name.loc']
+  ]
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "#{current_dir}/deploy/ansible/provision.yml"
   end
