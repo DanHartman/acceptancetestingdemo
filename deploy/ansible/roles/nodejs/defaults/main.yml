@@ -18,7 +18,12 @@ nodejs_npm_global_packages: #[]
  - name: web-terminal
  - name: codeceptjs
  - name: webdriverio
- - name: phantomjs-prebuilt 
+ - name: phantomjs-prebuilt
+ - name: selenium-webdriver
+ - name: grunt
+ - name: grunt-cli
+ - name: grunt-init
+ - name: grunt-contrib-watch
 #    version: 0.9.3
 #  # Install the latest stable release of a package.
 #  - name: node-sass

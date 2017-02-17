@@ -15,6 +15,7 @@ apt_packages:
   - build-essential
   - fontconfig
   - libfontconfig
+  - python-pip
 
 ansible_os_family: Debian
 ansible_distribution_release: xenial

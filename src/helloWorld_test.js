@@ -1,10 +1,7 @@
 
-Feature('HelloWorld');
+Feature('Navigation Menu');
 
-Scenario('test www.compliancecrane.com/', (I) => {
+Scenario('Verifies Nav Menu ', (I) => {
   I.amOnPage('/');
-  I.dontSee('404');
-  I.dontSee('501');
-  I.dontSee('Error');
-  I.see('Compliance Crane Services Inc.');
+  I.seeElement('#menu-item-93');
 });
